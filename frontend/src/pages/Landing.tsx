@@ -50,7 +50,7 @@ export function Landing() {
           <button className="theme-toggle" onClick={toggle} title="Toggle dark mode">
             {theme === "dark" ? SUN : MOON}
           </button>
-          <a className="btn ghost" href="/auth/github">Sign in</a>
+          <a className="btn ghost" href={`${import.meta.env.VITE_API_URL}/auth/github`}>Sign in</a>
         </nav>
       </header>
 
@@ -69,7 +69,7 @@ export function Landing() {
           scoring quality, and labeling changes automatically, so your team ships with confidence.
         </p>
         <div className="hero-ctas">
-          <a className="btn primary" href="/auth/github">
+          <a className="btn primary" href={`${import.meta.env.VITE_API_URL}/auth/github`}>
             {GITHUB_MARK} Login with GitHub
           </a>
           <a className="btn ghost" href="#demo">View demo →</a>
