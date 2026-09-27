@@ -1,0 +1,20 @@
+{
+  "name": "ai-reviewer-smartovate",
+  "url": "https://github.com/smartovate",
+  "hook_attributes": {
+    "url": "https://VOTRE-DOMAINE-OU-NGROK/webhook"
+  },
+  "redirect_url": "http://localhost:8000/setup/callback",
+  "public": false,
+  "default_permissions": {
+    "contents": "read",
+    "pull_requests": "write",
+    "issues": "write",
+    "checks": "write",
+    "metadata": "read"
+  },
+  "default_events": [
+    "pull_request",
+    "issue_comment"
+  ]
+}

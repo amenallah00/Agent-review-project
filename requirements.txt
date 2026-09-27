@@ -1,0 +1,29 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+httpx==0.27.2
+pyjwt[crypto]==2.10.1
+pydantic-settings==2.5.2
+python-dotenv==1.0.1
+pylint==3.3.1
+pyyaml==6.0.2
+sqlalchemy==2.0.52
+
+# tiktoken est OPTIONNEL : utilisé uniquement pour un comptage précis des
+# tokens dans le chunking (AAR-19). En son absence, le code bascule
+# automatiquement sur une estimation par caractères (voir diff_chunker.py) —
+# aucune fonctionnalité n'est perdue, juste un peu moins de précision sur
+# le découpage des très gros diffs. Décommentez si votre installation
+# Python dispose d'un compilateur Rust (nécessaire pour compiler tiktoken
+# sur les versions de Python encore trop récentes pour avoir un wheel
+# précompilé, ex: Python 3.14 au moment de l'écriture de ce fichier) :
+# tiktoken==0.8.0
+
+# PostgreSQL driver (Railway deployment)
+psycopg2-binary==2.9.10
+
+# Production WSGI server
+gunicorn==23.0.0
+
+# tests
+pytest==8.3.3
+pytest-asyncio==0.24.0

@@ -1,0 +1,53 @@
+name: CI/CD - Agent IA de Revue de Code
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Lancer la suite de tests
+        run: pytest -q
+
+  deploy:
+    name: Déploiement Azure Container Apps
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Connexion à Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Build & push de l'image sur Azure Container Registry
+        run: |
+          az acr build \
+            --registry ${{ vars.ACR_NAME }} \
+            --image ai-code-review-agent:${{ github.sha }} \
+            --image ai-code-review-agent:latest \
+            --file Dockerfile .
+
+      - name: Déployer la nouvelle image sur Container Apps
+        run: |
+          az containerapp update \
+            --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
+            --name ${{ vars.CONTAINER_APP_NAME }} \
+            --image ${{ vars.ACR_NAME }}.azurecr.io/ai-code-review-agent:${{ github.sha }}

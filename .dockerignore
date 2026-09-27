@@ -1,0 +1,14 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+secrets/
+*.pem
+.git/
+.gitignore
+.vscode/
+tests/
+README.md
+ARCHITECTURE.md
